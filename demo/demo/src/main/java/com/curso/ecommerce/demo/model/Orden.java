@@ -2,33 +2,58 @@ package com.curso.ecommerce.demo.model;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+@Entity
+@Table(name = "ordenes")
 public class Orden {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String numero;
 	private Date fechaCreacion;
 	private Date fechaRecibida;	
 	private double total;
+	@ManyToOne
+	private Usuario usuario;
+	@OneToOne
+	private DetalleOrden detalleOrden;
+	
 	
 	public Orden() {
 		
 	}
 
-	public Orden(int id, String numero, Date fechaCreacion, Date fechaRecibida, double total) {
+	public Orden(int id, String numero, Date fechaCreacion, Date fechaRecibida, double total, Usuario usuario) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.fechaCreacion = fechaCreacion;
 		this.fechaRecibida = fechaRecibida;
 		this.total = total;
+		this.usuario = usuario;
 	}
-
-
+	
 
 	@Override
 	public String toString() {
-		return "Orden [id=" + id + ", numero=" + numero + ", total=" + total + "]";
+		return "Orden [id=" + id + ", numero=" + numero + ", fechaCreacion=" + fechaCreacion + ", fechaRecibida="
+				+ fechaRecibida + ", total=" + total + ", usuario=" + usuario + "]";
 	}
 
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public int getId() {
 		return id;
