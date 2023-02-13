@@ -83,7 +83,7 @@ public class ProductoController {
 		p = productoService.get(producto.getId()).get();
 		if(file.isEmpty()) {
 			producto.setImagen(p.getImagen());
-		}else {
+		}else {//cuando se edita tambien la imagen hay que borrar la anterior
 			if(!p.getImagen().equals("default.png")){
 				uploadFileService.deleteImage(p.getImagen());
 			}
