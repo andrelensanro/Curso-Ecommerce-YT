@@ -109,7 +109,6 @@ public class ProductoController {
 			uploadFileService.deleteImage(p.getImagen());
 		}
 		
-		
 		productoService.delete(id);
 		return "redirect:/productos";
 	}
