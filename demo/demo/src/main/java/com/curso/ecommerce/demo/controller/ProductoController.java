@@ -79,8 +79,12 @@ public class ProductoController {
 		 *                         
 		 * 
 		 * */
+		
+		
 		Producto p = new Producto();
 		p = productoService.get(producto.getId()).get();
+		
+		
 		if(file.isEmpty()) {
 			producto.setImagen(p.getImagen());
 		}else {//cuando se edita tambien la imagen hay que borrar la anterior
@@ -90,6 +94,7 @@ public class ProductoController {
 			String nameImage = uploadFileService.saveImage(file);
 			producto.setImagen(nameImage);
 		}
+		producto.setUsuario(p.getUsuario());
 		productoService.update(producto);
 		return "redirect:/productos";
 	}
