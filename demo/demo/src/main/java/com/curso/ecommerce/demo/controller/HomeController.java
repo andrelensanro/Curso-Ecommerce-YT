@@ -16,12 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.curso.ecommerce.demo.model.DetalleOrden;
 import com.curso.ecommerce.demo.model.Orden;
 import com.curso.ecommerce.demo.model.Producto;
+import com.curso.ecommerce.demo.model.Usuario;
+import com.curso.ecommerce.demo.repository.IUsuarioRepository;
+import com.curso.ecommerce.demo.service.IUsuarioService;
 import com.curso.ecommerce.demo.service.ProductoService;
+
 
 @Controller
 @RequestMapping("/")
 
 public class HomeController {
+	
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	private final Logger log = LoggerFactory.getLogger(HomeController.class);
 	//Para almacenar los detalles de la orden
@@ -128,6 +135,19 @@ public class HomeController {
 		model.addAttribute("detalles", detalles);
 		model.addAttribute("orden", orden);
 		return "usuario/carrito";
+	}
+	
+	
+	@GetMapping("/order")
+	public String order (Model model) {
+		
+		Usuario usuario = usuarioService.findById(1);
+		
+		model.addAttribute("detalles", detalles);
+		model.addAttribute("orden", orden);
+		model.addAttribute("usuario", usuario);
+		
+		return "usuario/resumenorden";
 	}
 	
 	

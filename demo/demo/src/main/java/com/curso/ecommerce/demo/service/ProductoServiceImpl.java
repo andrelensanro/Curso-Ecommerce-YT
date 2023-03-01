@@ -13,12 +13,15 @@ import com.curso.ecommerce.demo.repository.ProductoRepository;
 @Service
 public class ProductoServiceImpl implements ProductoService{
 
-	// Esta anotacion indica que estamos inyectando a esta clase un objeto
+	
+	// Esta anotacion indica que estamos inyectando a esta clase un objeto	
 	@Autowired
 	// El autowired en este caso nos trae la dependencia que 
 	// tenemos en ProductoRepository, que aunque no definio nada, 
 	// este por defecto ya trae funciones que podemos usar. 
 	private ProductoRepository productoRepository;
+
+	
 	
 	@Override
 	public Producto save(Producto producto) {
