@@ -1,6 +1,7 @@
 package com.curso.ecommerce.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.*;
@@ -18,6 +19,8 @@ import com.curso.ecommerce.demo.model.Orden;
 import com.curso.ecommerce.demo.model.Producto;
 import com.curso.ecommerce.demo.model.Usuario;
 import com.curso.ecommerce.demo.repository.IUsuarioRepository;
+import com.curso.ecommerce.demo.service.IDetalleOrdenService;
+import com.curso.ecommerce.demo.service.IOrdenService;
 import com.curso.ecommerce.demo.service.IUsuarioService;
 import com.curso.ecommerce.demo.service.ProductoService;
 
@@ -29,6 +32,10 @@ public class HomeController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+	@Autowired
+	private IOrdenService ordenService;
+	@Autowired
+	private IDetalleOrdenService detalleOrdenService;
 	
 	private final Logger log = LoggerFactory.getLogger(HomeController.class);
 	//Para almacenar los detalles de la orden
@@ -149,6 +156,29 @@ public class HomeController {
 		
 		return "usuario/resumenorden";
 	}
+	
+	@GetMapping("/saveOrder")
+	public String saveOrder() {
+		Date fechaCreacion = new Date();
+		orden.setFechaCreacion(fechaCreacion);
+		orden.setNumero(ordenService.generateNumberOrden());
+		
+		Usuario usuario = usuarioService.findById(1);
+		orden.setUsuario(usuario);
+		ordenService.save(orden);
+		
+		for(DetalleOrden dto : detalles) {
+			dto.setOrden(orden);
+			detalleOrdenService.save(dto);
+		}
+		
+		// limpiar 
+		orden = new Orden();
+		detalles.clear();
+		
+		return "redirect:/";
+	}
+	
 	
 	
 }
