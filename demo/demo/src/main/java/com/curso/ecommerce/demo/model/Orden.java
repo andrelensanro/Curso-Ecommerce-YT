@@ -1,13 +1,14 @@
 package com.curso.ecommerce.demo.model;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 @Entity
 @Table(name = "ordenes")
@@ -21,13 +22,27 @@ public class Orden {
 	private double total;
 	@ManyToOne
 	private Usuario usuario;
-	@OneToOne
-	private DetalleOrden detalleOrden;
+	@OneToMany(mappedBy="orden")
+	private List<DetalleOrden> detalleOrden;
 	
 	
 	public Orden() {
 		
 	}
+
+
+
+	public List<DetalleOrden> getDetalleOrden() {
+		return detalleOrden;
+	}
+
+
+
+	public void setDetalleOrden(List<DetalleOrden> detalleOrden) {
+		this.detalleOrden = detalleOrden;
+	}
+
+
 
 	public Orden(int id, String numero, Date fechaCreacion, Date fechaRecibida, double total, Usuario usuario) {
 		super();
