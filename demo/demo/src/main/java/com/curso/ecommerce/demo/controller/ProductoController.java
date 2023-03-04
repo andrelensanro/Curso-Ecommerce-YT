@@ -16,8 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.curso.ecommerce.demo.model.Producto;
 import com.curso.ecommerce.demo.model.Usuario;
+import com.curso.ecommerce.demo.service.IUsuarioService;
 import com.curso.ecommerce.demo.service.ProductoService;
 import com.curso.ecommerce.demo.service.UploadFileService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/productos")
@@ -29,7 +32,8 @@ public class ProductoController {
 	private  ProductoService productoService;
 	@Autowired
 	private UploadFileService uploadFileService;
-	
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	@GetMapping("")
 	public String show(Model model) {
@@ -42,8 +46,9 @@ public class ProductoController {
 		
 	}
 	@PostMapping("/save")
-	public String save(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {	
-		Usuario usuario = new Usuario(1, "", "", "", "", "", "", "" );
+	public String save(Producto producto, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {	
+		
+		Usuario usuario = usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString()));
 		producto.setUsuario(usuario);
 		
 		//manejo de la imagen	
