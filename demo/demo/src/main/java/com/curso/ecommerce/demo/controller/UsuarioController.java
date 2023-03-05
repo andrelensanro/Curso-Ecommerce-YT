@@ -73,7 +73,7 @@ public class UsuarioController {
 	@GetMapping("/shopping")
 	public String comprar(Model model, HttpSession session) {
 		
-		model.addAttribute("session", session.getAttribute("idusuario")); 
+		model.addAttribute("sesion", session.getAttribute("idusuario")); 
 		
 		Usuario usuario = usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString()));
 		List<Orden> ordenes = ordenService.findByUsuario(usuario);
@@ -98,6 +98,10 @@ public class UsuarioController {
 		
 		return "usuario/detallecompra";
 	}
-	
+	@GetMapping("/logout")
+	public String cerrar_sesion(HttpSession session) {
+		session.removeAttribute("idusuario");
+		return "redirect:/";
+	}
 	
 }
